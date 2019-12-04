@@ -1,4 +1,8 @@
 package com.qf.dao;
 
-public class GoodsMapper {
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qf.entity.Goods;
+
+public interface GoodsMapper extends BaseMapper<Goods> {
+
 }

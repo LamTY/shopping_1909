@@ -2,7 +2,7 @@ dubbo:
   application:
     name: srevice-goods
   registry:
-    address: zookeeper://192.168.178.128/:2181
+    address: zookeeper://192.168.50.129:2181
   protocol:
     port: -1
   consumer:

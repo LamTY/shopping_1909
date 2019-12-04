@@ -9,4 +9,4 @@ dubbo:
   application:
     name: web-goods
   registry:
-    address: zookeeper://192.168.178.128/:2181
+    address: zookeeper://192.168.50.129:2181
