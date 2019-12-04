@@ -8,6 +8,8 @@ import com.qf.entity.GoodsImages;
 import com.qf.service.IGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Service
 public class GoodsService implements IGoodsService {
     @Autowired
@@ -34,5 +36,11 @@ public class GoodsService implements IGoodsService {
             goodsLIstMapper.insert(gi2);
         }
 
+    }
+
+    @Override
+    public List<Goods> list() {
+
+        return goodsMapper.queryList();
     }
 }
