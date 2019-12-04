@@ -6,7 +6,6 @@ import com.qf.entity.ResultData;
 import com.qf.service.IGoodsService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -30,8 +28,7 @@ public class GoodsController {
     private String uploadPath = "G:/idea_workspace/imgs";
 
     @RequestMapping("/list")
-    public String list(Model model){
-        List<Goods> goodsList=goodsService.list();
+    public String list(){
 
         return "goodslist";
     }
