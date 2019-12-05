@@ -44,13 +44,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr th:each="goods : ${goodsList}">
                         <td><input type="checkbox" /></td>
-                        <td>Lorem ipsum dolor</td>
-                        <td><a href="#" title="title">Sit amet</a></td>
-                        <td>Consectetur adipiscing</td>
-                        <td>Donec tortor diam</td>
-                        <td>Donec tortor diam</td>
+                        <td th:text="${goods.id}">Lorem ipsum dolor</td>
+                        <td th:text="${goods.subject}">Lorem ipsum dolor</td>
+                        <td><img style="width: 120px; height: 90px" th:src="|/goods/showimg?imgPath=${goods.fmurl}|"/></td>
+                        <td th:text="${#numbers.formatCurrency(goods.price)}">Lorem ipsum dolor</td>
+                        <td th:text="${goods.save}">Consectetur adipiscing</td>
                         <td>
                             <!-- Icons --> <a href="#" title="Edit"><img
                                 src="resources/images/icons/pencil.png" alt="Edit" /></a> <a
@@ -132,7 +132,7 @@
             if(response.code == "200"){
                 //设置图片回显
                 var htmlimg="<img style='width: 120px; height: 120px; margin: 10px' src='/goods/showimg?imgPath="+ response.data + "'/>";
-                    alert(htmlimg)
+
                 $("#imgdiv").append(htmlimg);
 
                 var htmlhidden = "<input type='hidden' name='otherurls' value='" + response.data + "'/>";

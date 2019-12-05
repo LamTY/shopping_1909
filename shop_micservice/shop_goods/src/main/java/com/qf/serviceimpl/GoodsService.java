@@ -8,6 +8,8 @@ import com.qf.entity.GoodsImages;
 import com.qf.service.IGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Service
 public class GoodsService implements IGoodsService {
     @Autowired
@@ -27,12 +29,19 @@ public class GoodsService implements IGoodsService {
         goodsLIstMapper.insert(gi1);
 
         for (String otherurl : goods.getOtherurls()) {
+            System.out.println("fds"+otherurl);
             GoodsImages gi2=new GoodsImages();
-            gi1.setGid(goods.getId())
+            gi2.setGid(goods.getId())
                     .setIsfengmian(0)
                     .setUrl(otherurl);
+            System.out.println(gi2);
             goodsLIstMapper.insert(gi2);
         }
 
+    }
+    @Override
+    public List<Goods> list() {
+
+        return goodsMapper.queryList();
     }
 }
