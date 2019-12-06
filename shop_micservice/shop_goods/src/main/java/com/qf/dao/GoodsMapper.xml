@@ -17,7 +17,7 @@
 
     </resultMap>
 
-    <select id="queryList" resultType="com.qf.entity.Goods">
+    <select id="queryList" resultMap="MyRsultMap">
         select g.*,
         (select gis.url from goods_images gis where gid = g.id and gis.isfengmian = 1) as 'fmurl',
         gi.url as 'otherurls'
