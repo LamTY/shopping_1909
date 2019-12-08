@@ -72,7 +72,7 @@ public class GoodsController {
         }
 
         System.out.println("这个傻逼玩意");
-        return new ResultData<String>().setCode(ResultData.ResultCodeList.OK).setData("http://www.img.com:8888"+path);
+        return new ResultData<String>().setCode(ResultData.ResultCodeList.OK).setData("http://www.img.com:8080/"+path);
     }
 
 /*    @RequestMapping("/showimg")

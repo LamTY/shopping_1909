@@ -1,11 +1,13 @@
 package com.qf.serviceimpl;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.qf.dao.GoodsLIstMapper;
 import com.qf.dao.GoodsMapper;
 import com.qf.entity.Goods;
 import com.qf.entity.GoodsImages;
 import com.qf.service.IGoodsService;
+import com.qf.service.ISearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class GoodsService implements IGoodsService {
     @Autowired
     private GoodsLIstMapper goodsLIstMapper;
 
+    @Reference
+    private ISearchService searchService;
 
     @Override
     public void insert(Goods goods) {
@@ -37,6 +41,8 @@ public class GoodsService implements IGoodsService {
             System.out.println(gi2);
             goodsLIstMapper.insert(gi2);
         }
+
+        searchService.insertSolr(goods);
 
     }
     @Override
