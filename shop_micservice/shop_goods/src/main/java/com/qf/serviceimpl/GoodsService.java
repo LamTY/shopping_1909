@@ -9,6 +9,7 @@ import com.qf.entity.GoodsImages;
 import com.qf.service.IGoodsService;
 import com.qf.service.ISearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class GoodsService implements IGoodsService {
     private ISearchService searchService;
 
     @Override
+    @Transactional
     public void insert(Goods goods) {
         goodsMapper.insert(goods);
         GoodsImages gi1=new GoodsImages();

@@ -1,0 +1,21 @@
+server:
+  port: 8890
+spring:
+  thymeleaf:
+    cache: false
+  rabbitmq:
+    host: 192.168.178.128
+    username: admin
+    password: admin
+    virtual-host: /admin
+  redis:
+    host: 192.168.178.128
+dubbo:
+  application:
+    name: web-sso
+  registry:
+    address: zookeeper://192.168.178.128:2181
+  consumer:
+    check: false
+    timeout: 10000
+    retries: 0

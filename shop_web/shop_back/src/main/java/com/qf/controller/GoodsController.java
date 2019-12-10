@@ -53,7 +53,7 @@ public class GoodsController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        System.out.println("file是"+file);
+
         String path=null;
         try {
             StorePath storePath = fastFileStorageClient.uploadImageAndCrtThumbImage(
@@ -63,15 +63,15 @@ public class GoodsController {
                     null
 
             );
-            System.out.println("dsads21321321");
+
             path=storePath.getFullPath();
-            System.out.println("path"+path);
+
         } catch (Exception e) {
             e.printStackTrace();
 
         }
 
-        System.out.println("这个傻逼玩意");
+
         return new ResultData<String>().setCode(ResultData.ResultCodeList.OK).setData("http://www.img.com:8080/"+path);
     }
 
