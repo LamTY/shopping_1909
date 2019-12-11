@@ -9,7 +9,7 @@ dubbo:
   application:
     name: web-goods
   registry:
-    address: zookeeper://192.168.178.128:2181
+    address: zookeeper://192.168.50.129:2181
 fdfs:
   pool:
     jmx-enabled: false
@@ -17,4 +17,4 @@ fdfs:
     width: 100
     height: 100
   tracker-list:
-    - 192.168.178.128:22122
+    - 192.168.50.129:22122

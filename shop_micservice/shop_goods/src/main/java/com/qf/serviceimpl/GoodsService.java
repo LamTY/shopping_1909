@@ -8,6 +8,7 @@ import com.qf.entity.Goods;
 import com.qf.entity.GoodsImages;
 import com.qf.service.IGoodsService;
 import com.qf.service.ISearchService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ public class GoodsService implements IGoodsService {
 
     @Reference
     private ISearchService searchService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     @Transactional
@@ -44,7 +48,8 @@ public class GoodsService implements IGoodsService {
             goodsLIstMapper.insert(gi2);
         }
 
-        searchService.insertSolr(goods);
+
+        rabbitTemplate.convertAndSend("goods_exchange", "", goods);
 
     }
     @Override

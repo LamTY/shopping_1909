@@ -1,11 +1,13 @@
 package com.qf.controller;
 
+
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.entity.User;
 import com.qf.service.IUserService;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/sso")
@@ -14,14 +16,27 @@ public class SsoController {
     @Reference
     private IUserService userService;
 
-    @RequestMapping("/toregister")
+    @RequestMapping("/toLogin")
+    public String toLogin(){
+        return "login";
+    }
+
+
+    @RequestMapping("/toRegister")
     public String toRegister(){
+
         return "register";
     }
 
+    /**
+     * 注册
+     * @param user
+     * @param model
+     * @return
+     */
     @RequestMapping("/register")
     public String register(User user, Model model) {
-
+        System.out.println("需要添加的用户是"+user);
         int result =userService.register(user);
         if(result > 0){
             return "login";
@@ -33,5 +48,7 @@ public class SsoController {
         }
         return "register";
     }
+
+
 
 }
