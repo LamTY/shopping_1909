@@ -10,4 +10,6 @@ public interface IGoodsService {
     void insert(Goods goods);
 
     List<Goods> list();
+
+    Goods queryById(Integer id);
 }

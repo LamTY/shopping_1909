@@ -57,7 +57,7 @@ public class ForgetController {
         Email email=new Email()
                 .setTo(user.getEmail())
                 .setSubject("找回通往世界的钥匙")
-                .setContext("点击<a href='"+url+"'>这里</a>找回密码")
+                .setContext("a href='"+url+"'>骚年，你渴望力量吗</a>")
                 .setSendTime(new Date());
 
         rabbitTemplate.convertAndSend("mail_exchange","",email);
@@ -75,5 +75,22 @@ public class ForgetController {
                 .setCode(ResultData.ResultCodeList.OK)
                 .setMsg("发送成功")
                 .setData(emailMap);
+    }
+
+    @RequestMapping("toUpdatePassword")
+    public String toUpdatePassword(){
+        return "updatapassword";
+    }
+
+    @RequestMapping("updatePassword")
+    public String updatePassword(String newpassword,String token){
+        System.out.println("修改密码");
+        String username = redisTemplate.opsForValue().get("token");
+        if(username == null){
+            return "updatapassworderror";
+        }
+        userService.updataPassword(username,newpassword);
+
+        return "login";
     }
 }

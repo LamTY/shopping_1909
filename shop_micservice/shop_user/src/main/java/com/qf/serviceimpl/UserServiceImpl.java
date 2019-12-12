@@ -33,4 +33,12 @@ public class UserServiceImpl implements IUserService {
 
         return userMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public void updataPassword(String username, String newpassword) {
+        User user=queryByUserName(username);
+        user.setPassword(newpassword);
+        userMapper.updateById(user);
+
+    }
 }

@@ -7,4 +7,6 @@ public interface IUserService {
     int register(User user);
 
     User queryByUserName(String username);
+
+    void updataPassword(String username, String newpassword);
 }

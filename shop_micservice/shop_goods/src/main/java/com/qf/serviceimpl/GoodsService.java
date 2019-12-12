@@ -57,4 +57,9 @@ public class GoodsService implements IGoodsService {
 
         return goodsMapper.queryList();
     }
+
+    @Override
+    public Goods queryById(Integer id) {
+        return goodsMapper.selectById(id);
+    }
 }
