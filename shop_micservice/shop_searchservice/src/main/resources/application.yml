@@ -2,7 +2,7 @@ dubbo:
   application:
     name: service-search
   registry:
-    address: zookeeper://192.168.50.129:2181
+    address: zookeeper://www.img.com:2181
   consumer:
     check: false
   protocol:
@@ -10,9 +10,9 @@ dubbo:
 spring:
   data:
     solr:
-      host: http://192.168.50.129:8983/solr/mycollection
+      host: http://www.img.com:8983/solr/mycollection
   rabbitmq:
-    host: 192.168.50.129
+    host: www.img.com
     username: admin
     password: admin
     virtual-host: /admin

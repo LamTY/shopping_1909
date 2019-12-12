@@ -4,17 +4,17 @@ spring:
   thymeleaf:
     cache: false
   rabbitmq:
-    host: 192.168.50.129
+    host: www.img.com
     username: admin
     password: admin
     virtual-host: /admin
   redis:
-    host: 192.168.50.129
+    host: www.img.com
 dubbo:
   application:
     name: web-sso
   registry:
-    address: zookeeper://192.168.50.129:2181
+    address: zookeeper://www.img.com:2181
   consumer:
     check: false
     timeout: 10000
