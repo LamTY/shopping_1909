@@ -60,6 +60,7 @@ public class GoodsService implements IGoodsService {
 
     @Override
     public Goods queryById(Integer id) {
-        return goodsMapper.selectById(id);
+        return goodsMapper.selectByIdOne(id);
+
     }
 }

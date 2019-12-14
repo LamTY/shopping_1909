@@ -16,7 +16,7 @@
                             $("#pid").html(data.data.nickname + "您好，欢迎来到<b>ShopCZ商城</b>  <a href='http://localhost:8890/sso/logout'>注销</a>");
                         } else {
                             $("#pid").html("" +
-                                "[<a href=\"http://localhost:8890/sso/toLogin\">登录</a>]" +
+                                "[<a onclick='login()'>登录</a>]" +
                                 "[<a href=\"http://localhost:8890/sso/toRegister\">注册</a>]");
                         }
                     },
@@ -24,6 +24,11 @@
 
                 })
             })
+            function login() {
+
+                var returnUrl=location.href;
+                window.location="http://localhost:8890/sso/toLogin?returnUrl="+returnUrl;
+            }
 
         </script>
         <!-- Header TopNav Left -->

@@ -8,4 +8,6 @@ import java.util.List;
 public interface GoodsMapper extends BaseMapper<Goods> {
 
     List<Goods> queryList();
+
+    Goods selectByIdOne(Integer id);
 }

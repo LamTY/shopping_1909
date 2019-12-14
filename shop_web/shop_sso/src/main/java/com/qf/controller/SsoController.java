@@ -66,18 +66,27 @@ public class SsoController {
      */
 
     @RequestMapping("login")
-    public String login(String username, String password, HttpServletResponse response){
+    public String login(String username, String password, String returnUrl, HttpServletResponse response){
         System.out.println("登录的用户名"+username+"密码"+password);
         User user = userService.queryByUserName(username);
         System.out.println(user);
         if(user != null && password.equals(user.getPassword())){
-            System.out.println("11111");
+
             String token = UUID.randomUUID().toString();
             redisTemplate.opsForValue().set(token , user);
             Cookie loginToken = new Cookie("loginToken", token);
+
             loginToken.setMaxAge(60 * 60 * 24 * 7);
+
+            loginToken.setPath("/");
+            loginToken.setDomain("localhost");
             response.addCookie(loginToken);
-            return "http://localhost";
+
+            if(returnUrl == null || returnUrl.equals("")){
+                returnUrl ="http://localhost";
+            }
+
+            return "redirect:"+returnUrl;
         }
 
         return "redirect:/sso/toLogin";
@@ -90,15 +99,31 @@ public class SsoController {
     @RequestMapping("isLogin")
     @ResponseBody
     public String isLogin(@CookieValue(value = "loginToken", required = false) String loginTokin, String callback){
-
+        System.out.println("判断是否已经登录"+loginTokin);
         ResultData<User> resultData = new ResultData<User>().setCode(ResultData.ResultCodeList.ERROR);
         if(loginTokin != null){
-            User user = (User) redisTemplate.opsForValue().get("loginToken");
+
+            User user = (User) redisTemplate.opsForValue().get(loginTokin);
+            System.out.println("用户是"+user);
             if (user != null){
                 resultData.setCode(ResultData.ResultCodeList.OK).setData(user);
             }
         }
         return callback != null ? callback + "(" + JSON.toJSONString(resultData) + ")" : JSON.toJSONString(resultData);
+    }
+
+    /**
+     * 注销
+     */
+    @RequestMapping("logout")
+    public String logout(@CookieValue(value = "loginToken" , required = false) String loginToken, HttpServletResponse response){
+
+        redisTemplate.delete(loginToken);
+        Cookie cookie = new Cookie("loginToken", null);
+        cookie.setPath("/");
+        cookie.setDomain("localhost");
+        response.addCookie(cookie);
+        return "redirect:/sso/toLogin";
     }
 
 }
