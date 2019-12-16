@@ -19,5 +19,6 @@ spring:
     password: admin
     virtual-host: /admin
     port: 5672
+  redis: www.img.com
 mybatis-plus:
   mapper-locations: classpath:com/qf/dao/*.xml

@@ -5,4 +5,12 @@ spring:
     host: www.img.com
   thymeleaf:
     cache: false
-
+dubbo:
+  application:
+    name: web_cart
+  registry:
+    address: zookeeper://www.img.com:2181
+  consumer:
+    timeout: 1000
+    check: false
+    retries: 0
