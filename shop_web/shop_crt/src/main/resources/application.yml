@@ -1,0 +1,8 @@
+server:
+  port: 8891
+spring:
+  redis:
+    host: www.img.com
+  thymeleaf:
+    cache: false
+

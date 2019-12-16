@@ -13,7 +13,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 
 @Aspect
 @Component
@@ -50,7 +52,8 @@ public class IsLoginAop {
 
         //空，需要登录
         if(user == null){
-            /*MethodSignature methodSignatureature = (MethodSignature) proceedingJoinPoint.getSignature();
+
+            MethodSignature methodSignatureature = (MethodSignature) proceedingJoinPoint.getSignature();
             Method method = methodSignatureature.getMethod();
             IsLogin isLogin = method.getAnnotation(IsLogin.class);
             boolean flag = isLogin.mustLogin();
@@ -58,6 +61,7 @@ public class IsLoginAop {
                 String returnUrl = request.getRequestURL().toString()+"?"+request.getQueryString();
 
                 try {
+
                     returnUrl = URLEncoder.encode(returnUrl,"utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -65,24 +69,24 @@ public class IsLoginAop {
                 String loginUrl = "http://localhost:8890/sso/toLogin?returnUrl=" + returnUrl;
 
                 return "redirect:" + loginUrl;
-            }*/
-
-            MethodSignature methodSignatureature = (MethodSignature) proceedingJoinPoint.getSignature();
-            Method method = methodSignatureature.getMethod();
-            IsLogin isLogin = method.getAnnotation(IsLogin.class);
-            boolean flag = isLogin.mustLogin();
-            if(flag){
-                LoginStatus.setUser(user);
-
-                Object result = null;
-                try {
-                    result = proceedingJoinPoint.proceed();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-
-                return result;
             }
+
+//            MethodSignature methodSignatureature = (MethodSignature) proceedingJoinPoint.getSignature();
+//            Method method = methodSignatureature.getMethod();
+//            IsLogin isLogin = method.getAnnotation(IsLogin.class);
+//            boolean flag = isLogin.mustLogin();
+//            if(flag){
+//                LoginStatus.setUser(user);
+//
+//                Object result = null;
+//                try {
+//                    result = proceedingJoinPoint.proceed();
+//                } catch (Throwable throwable) {
+//                    throwable.printStackTrace();
+//                }
+//
+//                return result;
+//            }
 
 
         }

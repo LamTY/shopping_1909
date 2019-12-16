@@ -605,31 +605,45 @@
         </div>
     </div>
     <!-- 商品展示 End -->
-
     <script th:inline="javascript">
-        function addcart() {
-            var id = [[${goods.id}]];
+        //添加购物车
+        function addCart(){
 
+            //商品id
+            var id = [[${goods.id}]];
+            //商品数量
             var number = $("#good_nums").val();
 
-            $.ajax({
-                url: "http://localhost:8891/cart/insert",
-                data: {"id":id ,"number":number},
-                success: function (data) {
-                    if(data.code=="500"){
-                        var url=location.href;
-                            location.href="http://localhost:8890/sso/toLogin?returnUrl=" +url;
-                    }else{
-                        alert(data.msg);
-                    }
-                },
-                dataType:"jsonp"
-            })
-
-
+            //加入购物车
+            location.href = "http://localhost:8891/cart/insert?id=" + id + "&number=" + number;
 
         }
     </script>
+<!--    <script th:inline="javascript">-->
+<!--        function addcart() {-->
+<!--            var id = [[${goods.id}]];-->
+
+<!--            var number = $("#good_nums").val();-->
+
+<!--            $.ajax({-->
+<!--                url: "http://localhost:8891/cart/insert",-->
+<!--                data: {"id":id ,"number":number},-->
+<!--                success: function (data) {-->
+<!--                    if(data.code=="500"){-->
+<!--                        var url=location.href;-->
+<!--                        alert(data.msg)-->
+<!--                            location.href="http://localhost:8890/sso/toLogin?returnUrl=" +data.msg;-->
+<!--                    }else{-->
+<!--                        alert(data.msg);-->
+<!--                    }-->
+<!--                },-->
+<!--                dataType:"jsonp"-->
+<!--            })-->
+
+
+
+<!--        }-->
+<!--    </script>-->
     <div class="clear mt15"></div>
     <!-- Goods Left -->
     <div class="shop_bd_list_left clearfix">
