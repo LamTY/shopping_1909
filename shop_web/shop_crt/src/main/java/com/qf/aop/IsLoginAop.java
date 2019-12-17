@@ -71,22 +71,22 @@ public class IsLoginAop {
                 return "redirect:" + loginUrl;
             }
 
-//            MethodSignature methodSignatureature = (MethodSignature) proceedingJoinPoint.getSignature();
-//            Method method = methodSignatureature.getMethod();
-//            IsLogin isLogin = method.getAnnotation(IsLogin.class);
-//            boolean flag = isLogin.mustLogin();
-//            if(flag){
-//                LoginStatus.setUser(user);
-//
-//                Object result = null;
-//                try {
-//                    result = proceedingJoinPoint.proceed();
-//                } catch (Throwable throwable) {
-//                    throwable.printStackTrace();
-//                }
-//
-//                return result;
-//            }
+          /*  MethodSignature methodSignatureature = (MethodSignature) proceedingJoinPoint.getSignature();
+            Method method = methodSignatureature.getMethod();
+            IsLogin isLogin = method.getAnnotation(IsLogin.class);
+            boolean flag = isLogin.mustLogin();
+            if(flag){
+                LoginStatus.setUser(user);
+
+                Object result = null;
+                try {
+                    result = proceedingJoinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+
+                return result;
+            }*/
 
 
         }

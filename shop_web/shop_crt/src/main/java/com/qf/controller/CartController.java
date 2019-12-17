@@ -7,6 +7,8 @@ import com.qf.aop.LoginStatus;
 import com.qf.entity.ShopCart;
 import com.qf.entity.User;
 import com.qf.service.ICartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,9 @@ public class CartController {
 
     @Reference
     private ICartService cartService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 加入购物车
@@ -47,17 +52,19 @@ public class CartController {
         }else {
             resultData = new ResultData<>().setCode(ResultData.ResultCodeList.OK).setMsg("添加成功");
         }
-        String header = request.getHeader("X-Requested-With");
-        System.out.println(header);
-        if("XMLHttpRequest".equals(header)){
+
+        if(callback != null){
             return callback + "("+ JSON.toJSONString(resultData)+")";
         }else {
-            return "redirect:/item/showById?id= "+id+"";
+            return "redirect:/item/showById?id= "+id;
         }
 
 
     }
      */
+
+
+
 
     @IsLogin(mustLogin = true)
     @RequestMapping("/insert")
@@ -85,5 +92,31 @@ public class CartController {
         User user = LoginStatus.getUser();
         List<ShopCart> shopCarts = cartService.listCarts(cartToken, user);
         return callback!=null ? callback + "("+ JSON.toJSONString(shopCarts) +")" : JSON.toJSONString(shopCarts);
+    }
+
+    @RequestMapping("merge")
+    @IsLogin(mustLogin = true)
+    public String merge(@CookieValue(value = "cartToken",required = false) String cartToken, String returnUrl, HttpServletResponse response){
+
+        if(cartToken != null){
+            List<ShopCart> cartList = redisTemplate.opsForList().range("cartToken", 0, redisTemplate.opsForList().size("cartToken"));
+
+            User user = LoginStatus.getUser();
+            for (ShopCart cart : cartList) {
+                cartService.insertCart(cart, user ,cartToken);
+            }
+
+            redisTemplate.delete(cartToken);
+
+            Cookie cookie = new Cookie("cartToken", null);
+
+            cookie.setMaxAge(0);
+
+            cookie.setPath("/");
+
+            response.addCookie(cookie);
+        }
+
+        return "redirect" + returnUrl;
     }
 }

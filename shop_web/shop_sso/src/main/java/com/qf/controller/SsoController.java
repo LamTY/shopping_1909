@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 @Controller
@@ -86,7 +88,13 @@ public class SsoController {
                 returnUrl ="http://localhost";
             }
 
-            return "redirect:"+returnUrl;
+            try {
+                returnUrl = URLEncoder.encode(returnUrl, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            return "redirect:http://localhost:8891/cart/merge?returnUrl="+returnUrl;
         }
 
         return "redirect:/sso/toLogin";
