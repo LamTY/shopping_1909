@@ -77,4 +77,27 @@ public class CartServiceImpl implements ICartService {
         }
         return shopCarts;
     }
+
+
+
+
+    @Override
+    public List<ShopCart> queryCartsByGid(Integer[] gid, User user) {
+
+        QueryWrapper queryWrapper = new QueryWrapper();
+
+        queryWrapper.eq("uid", user.getId());
+
+        queryWrapper.in("gid", gid);
+
+        List<ShopCart> carts = cartMapper.selectList(queryWrapper);
+
+        for (ShopCart cart : carts) {
+            Goods goods = goodsService.queryById(user.getId());
+
+            cart.setGoods(goods);
+        }
+
+        return carts;
+    }
 }

@@ -10,6 +10,7 @@ import com.qf.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -66,7 +67,7 @@ public class CartController {
 
 
 
-    @IsLogin(mustLogin = true)
+    @IsLogin
     @RequestMapping("/insert")
     public String insert(Integer id, Integer number, @CookieValue(value = "cartToken",required = false) String cartToken, HttpServletResponse response){
         System.out.println("加入购物车：" + id + "---" + number);
@@ -82,7 +83,7 @@ public class CartController {
         cookie.setMaxAge(60 * 60 * 24 * 365);
         cookie.setPath("/");
         response.addCookie(cookie);
-        return "insertok";
+        return "ok";
     }
 
     @RequestMapping("list")
@@ -118,5 +119,17 @@ public class CartController {
         }
 
         return "redirect" + returnUrl;
+    }
+
+    @RequestMapping("showCartList")
+    @IsLogin
+    public String showCartList(@CookieValue(value = "cartToken",required = false) String cartToken, Model model){
+        User user = LoginStatus.getUser();
+
+        List<ShopCart> shopCarts = cartService.listCarts(cartToken, user);
+
+        model.addAttribute("shopCarts", shopCarts);
+
+        return "cartlist";
     }
 }

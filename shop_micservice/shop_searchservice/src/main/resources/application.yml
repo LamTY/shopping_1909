@@ -11,6 +11,7 @@ spring:
   data:
     solr:
       host: http://www.img.com:8983/solr/mycollection
+
   rabbitmq:
     host: www.img.com
     username: admin

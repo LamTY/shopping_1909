@@ -10,4 +10,6 @@ public interface ICartService {
     String insertCart(ShopCart shopCart, User user, String cartToken);
 
     List<ShopCart> listCarts(String cartToken, User user);
+
+    List<ShopCart> queryCartsByGid(Integer[] gid, User user);
 }
