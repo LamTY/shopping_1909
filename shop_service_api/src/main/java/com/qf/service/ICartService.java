@@ -12,4 +12,7 @@ public interface ICartService {
     List<ShopCart> listCarts(String cartToken, User user);
 
     List<ShopCart> queryCartsByGid(Integer[] gid, User user);
+
+
+    int deleteByCids(Integer[] cids);
 }

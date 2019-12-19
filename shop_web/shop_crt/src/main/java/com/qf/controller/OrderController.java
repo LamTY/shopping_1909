@@ -3,10 +3,7 @@ package com.qf.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.aop.IsLogin;
 import com.qf.aop.LoginStatus;
-import com.qf.entity.Address;
-import com.qf.entity.ResultData;
-import com.qf.entity.ShopCart;
-import com.qf.entity.User;
+import com.qf.entity.*;
 import com.qf.service.IAddressService;
 import com.qf.service.ICartService;
 import com.qf.service.IOrderService;
@@ -67,15 +64,12 @@ public class OrderController {
     @IsLogin(mustLogin = true)
     @RequestMapping("/insertOrder")
     @ResponseBody
-    public ResultData<String> insertOrder(Integer aid, @RequestParam("cids") Integer[] cids){
+    public ResultData<Orders> insertOrder(Integer aid, @RequestParam("cids") Integer[] cids){
 
         User user = LoginStatus.getUser();
 
-        orderService.insertOrder(cids,aid,user);
+        Orders orders = orderService.insertOrder(cids, aid, user);
 
-
-
-
-        return new ResultData<String>().setCode(ResultData.ResultCodeList.OK).setMsg("下单成功");
+        return new ResultData<Orders>().setCode(ResultData.ResultCodeList.OK).setMsg("下单成功").setData(orders);
     }
 }
