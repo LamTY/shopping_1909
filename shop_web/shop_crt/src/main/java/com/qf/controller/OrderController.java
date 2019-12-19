@@ -4,14 +4,18 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.aop.IsLogin;
 import com.qf.aop.LoginStatus;
 import com.qf.entity.Address;
+import com.qf.entity.ResultData;
 import com.qf.entity.ShopCart;
 import com.qf.entity.User;
 import com.qf.service.IAddressService;
 import com.qf.service.ICartService;
+import com.qf.service.IOrderService;
 import com.qf.util.PriceUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -24,6 +28,9 @@ public class OrderController {
 
     @Reference
     private IAddressService addressService;
+
+    @Reference
+    private IOrderService orderService;
 
 
     /**
@@ -49,5 +56,26 @@ public class OrderController {
         model.addAttribute("allprice", allprice);
 
         return "orderdetail";
+    }
+
+    /**
+     *  添加订单
+     * @param aid
+     * @param cids
+     * @return
+     */
+    @IsLogin(mustLogin = true)
+    @RequestMapping("/insertOrder")
+    @ResponseBody
+    public ResultData<String> insertOrder(Integer aid, @RequestParam("cids") Integer[] cids){
+
+        User user = LoginStatus.getUser();
+
+        orderService.insertOrder(cids,aid,user);
+
+
+
+
+        return new ResultData<String>().setCode(ResultData.ResultCodeList.OK).setMsg("下单成功");
     }
 }

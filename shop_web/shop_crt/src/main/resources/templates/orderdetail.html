@@ -652,6 +652,28 @@
         </table>
         <!-- 购物车列表 End -->
 
+        <script>
+            function submitOrders() {
+                var aid = $("input[type = 'radio']:checked").val();
+
+                var cids = [];
+                $("input[type = 'hidden'][name = 'cid']").val().each(function () {
+                    var cid = $(this).val();
+
+                    cids.push(cid);
+                })
+
+                $.ajax({
+                    type: "post",
+                    url: "/order/inserOrder",
+                    data:{"aid": aid,"cids": cids},
+                    success: function (data) {
+                        alter(data)
+                    }
+
+                })
+            }
+        </script>
     </div>
 </div>
 <!-- 购物车 Body End -->
