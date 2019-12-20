@@ -72,4 +72,15 @@ public class OrderController {
 
         return new ResultData<Orders>().setCode(ResultData.ResultCodeList.OK).setMsg("下单成功").setData(orders);
     }
+
+
+    @RequestMapping("/list")
+    @IsLogin(mustLogin = true)
+    public String list(Model model){
+        List<Orders> orders = orderService.queryByUid(LoginStatus.getUser().getId());
+
+        model.addAttribute("orders", orders);
+
+        return "orderslist";
+    }
 }

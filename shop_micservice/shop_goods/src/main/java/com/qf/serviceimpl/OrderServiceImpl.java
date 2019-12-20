@@ -1,6 +1,7 @@
 package com.qf.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qf.dao.OrderDetilsMapper;
 import com.qf.dao.OrdersMapper;
 import com.qf.entity.*;
@@ -77,7 +78,18 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public List<Orders> queryByUid(Integer uid) {
-        return null;
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("uid", uid);
+        queryWrapper.orderByDesc("create_time");
+        List<Orders> ordersList = ordersMapper.selectList(queryWrapper);
+        for (Orders orders : ordersList) {
+
+            QueryWrapper queryWrapper1 = new QueryWrapper();
+            queryWrapper.eq("oid", orders.getId());
+            List<OrderDetils> list = orderDetilsMapper.selectList(queryWrapper1);
+            orders.setOrderDetils(list);
+        }
+        return ordersList;
     }
 
     @Override
