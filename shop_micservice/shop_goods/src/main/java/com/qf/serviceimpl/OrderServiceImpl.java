@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,6 +56,7 @@ public class OrderServiceImpl implements IOrderService {
                 .setAddress(address.getAddress())
                 .setPerson(address.getPerson());
 
+        new SimpleDa
         ordersMapper.insert(orders);
 
         for (ShopCart shopCart : shopCarts) {
@@ -94,16 +96,34 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Orders queryById(Integer id) {
-        return null;
+
+        Orders orders = ordersMapper.selectById(id);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("oid", orders.getId());
+        List<OrderDetils> list = orderDetilsMapper.selectList(queryWrapper);
+        orders.setOrderDetils(list);
+
+        return orders;
+
     }
 
     @Override
     public Orders QueryByOid(String oid) {
-        return null;
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("orderid", oid);
+        Orders orders = ordersMapper.selectOne(queryWrapper);
+        QueryWrapper queryWrapper2 = new QueryWrapper();
+        queryWrapper2.eq("oid", orders.getId());
+        List<OrderDetils> list = orderDetilsMapper.selectList(queryWrapper2);
+        orders.setOrderDetils(list);
+        return orders;
     }
 
     @Override
     public int updateOrderStatus(String orderid, Integer status) {
-        return 0;
+        Orders orders = this.QueryByOid(orderid);
+        orders.setStatus(status);
+
+        return ordersMapper.updateById(orders);
     }
 }
